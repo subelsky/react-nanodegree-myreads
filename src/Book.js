@@ -2,7 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 
 class Book extends Component {
+  state = {
+    shelf: ''
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = { shelf: props.book.shelf }
+  }
+
   static propTypes = {
+    onChange: PropTypes.func.isRequired,
+    
     book: PropTypes.shape({
       title: PropTypes.string.isRequired,
       authors: PropTypes.array,
@@ -10,8 +21,20 @@ class Book extends Component {
     })
   }
 
+  changeShelf = (event) => {
+    const shelf = event.target.value
+
+    let changedBook = this.props.book
+    changedBook.shelf = shelf
+
+    this.setState({ shelf })
+
+    this.props.onChange(changedBook)
+  }
+
   render() {
-    let { title, authors, imageLinks } = this.props.book
+    const { title, imageLinks } = this.props.book
+    let { authors } = this.props.book
 
     if (authors) {
       authors = authors.join(', ')
@@ -30,7 +53,7 @@ class Book extends Component {
         <div className="book-top">
           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: coverUrl }}></div>
           <div className="book-shelf-changer">
-            <select>
+            <select value={this.state.shelf} onChange={this.changeShelf}>
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>

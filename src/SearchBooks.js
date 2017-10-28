@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import Book from './Book'
+import PropTypes from 'prop-types'
 
 class SearchBooks extends Component {
+  static propTypes = {
+    onChange: PropTypes.func.isRequired
+  }
+
   state = {
     query: '',
     books: []
@@ -39,7 +44,7 @@ class SearchBooks extends Component {
         <div className="search-books-results">
           <ol className="books-grid">
             {books.map((book,idx) => (
-              <Book key={idx} book={book} />
+              <Book key={idx} book={book} onChange={this.props.onChange} />
             ))}
           </ol>
         </div>
