@@ -22,11 +22,15 @@ class BooksApp extends React.Component {
         return b.id === changedBook.id
       })
 
+      let newBooks = state.books
+
       if (bookIndex >= 0) {
-        state.books[bookIndex] = changedBook
+        newBooks[bookIndex] = changedBook
+      } else {
+        newBooks.push(changedBook)
       }
 
-      return { books: state.books }
+      return { books: newBooks }
     })
 
     BooksAPI.update(changedBook,changedBook.shelf).then(() => { 
