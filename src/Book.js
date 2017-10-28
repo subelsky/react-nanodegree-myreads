@@ -3,13 +3,26 @@ import PropTypes from 'prop-types'
 
 class Book extends Component {
   static propTypes = {
-    title: PropTypes.string.isRequired,
-    authors: PropTypes.array.isRequired,
-    coverUrl: PropTypes.string
+    book: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      authors: PropTypes.array,
+      imageLinks: PropTypes.object
+    })
   }
 
   render() {
-    const coverUrl = `url("${this.props.coverUrl}")`
+    let { title, authors, imageLinks } = this.props.book
+
+    if (authors) {
+      authors = authors.join(', ')
+    }
+
+    let coverUrl = ''
+
+    if (imageLinks) {
+      const thumbnailUrl = imageLinks.thumbnail
+      coverUrl = `url("${thumbnailUrl}")`
+    }
 
     return (
     <li>
@@ -26,8 +39,8 @@ class Book extends Component {
             </select>
           </div>
         </div>
-        <div className="book-title">{this.props.title}</div>
-        <div className="book-authors">{this.props.authors}</div>
+        <div className="book-title">{title}</div>
+        <div className="book-authors">{authors}</div>
       </div>
     </li>
     )

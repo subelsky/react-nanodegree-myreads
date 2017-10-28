@@ -21,11 +21,7 @@ class BookShelf extends Component {
       <div className="bookshelf-books">
         <ol className="books-grid">
         {books.map((book) => (
-          <Book 
-            key={book.title}
-            title={book.title}
-            authors={book.authors}
-            coverUrl={book.imageLinks.thumbnail} />
+          <Book key={book.title} book={book} />
         ))}
         </ol>
       </div>
