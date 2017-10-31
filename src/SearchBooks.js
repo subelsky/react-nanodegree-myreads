@@ -15,10 +15,10 @@ class SearchBooks extends Component {
   }
 
   updateQuery = (newQuery) => {
-    this.setState({ query: newQuery.trim() })
-    const query = this.state.query
+    const query = newQuery.trim()
+    this.setState({ query })
 
-    if (query) {
+    if (query.length > 0) {
       BooksAPI.search(query).then((books) => {
         if (books.error) {
           this.setState({ books: [] })
@@ -27,6 +27,8 @@ class SearchBooks extends Component {
           this.setState({ books })
         }
       })
+    } else {
+      this.setState({ books: [] })
     }
   }
 
