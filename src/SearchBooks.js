@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 
 class SearchBooks extends Component {
   static propTypes = {
+    allBooks: PropTypes.array.isRequired,
     onChange: PropTypes.func.isRequired
   }
 
@@ -19,12 +20,22 @@ class SearchBooks extends Component {
     this.setState({ query })
 
     if (query.length > 0) {
-      BooksAPI.search(query).then((books) => {
-        if (books.error) {
+      BooksAPI.search(query).then((searchBooks) => {
+        if (searchBooks.error) {
           this.setState({ books: [] })
-          console.warn(books.error)
+          console.warn(searchBooks.error)
         } else {
-          this.setState({ books })
+          let match
+
+          searchBooks.forEach((b) => {
+            match = this.props.allBooks.find((ab) => ab.id === b.id)
+            
+            if (match) {
+              b.shelf = match.shelf
+            }
+          })
+
+          this.setState({ books: searchBooks })
         }
       })
     } else {
