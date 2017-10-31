@@ -18,25 +18,26 @@ class BooksApp extends React.Component {
   }
 
   changeBook = (changedBook) => {
-    this.setState((state) => {
-      let bookIndex = state.books.findIndex((b) => { 
-        return b.id === changedBook.id
-      })
-
-      let newBooks = state.books
-
-      if (bookIndex >= 0) {
-        newBooks[bookIndex] = changedBook
-      } else {
-        newBooks.push(changedBook)
-      }
-
-      return { books: newBooks }
-    })
-
     BooksAPI.update(changedBook,changedBook.shelf).then(() => { 
       console.info(`updated '${changedBook.title}' to '${changedBook.shelf}'`)
+
+      this.setState((state) => {
+        let bookIndex = state.books.findIndex((b) => { 
+          return b.id === changedBook.id
+        })
+
+        let newBooks = state.books
+
+        if (bookIndex >= 0) {
+          newBooks[bookIndex] = changedBook
+        } else {
+          newBooks = newBooks.concat([changedBook])
+        }
+
+        return { books: newBooks }
+      })
     })
+
   }
 
   render() {
