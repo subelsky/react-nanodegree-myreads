@@ -42,10 +42,13 @@ class Book extends Component {
 
     let coverUrl = ''
 
-    if (imageLinks) {
-      const thumbnailUrl = imageLinks.thumbnail
-      coverUrl = `url("${thumbnailUrl}")`
+    if (imageLinks && imageLinks.thumbnail && imageLinks.thumbnail.length > 0) {
+      coverUrl = imageLinks.thumbnail
+    } else {
+      coverUrl = 'http://via.placeholder.com/128x193?text=No%20Cover'
     }
+
+    coverUrl = `url("${coverUrl}")`
 
     return (
     <li>
