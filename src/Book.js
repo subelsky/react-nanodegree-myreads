@@ -40,14 +40,7 @@ class Book extends Component {
       authors = authors.join(', ')
     }
 
-    let coverUrl = ''
-
-    if (imageLinks && imageLinks.thumbnail && imageLinks.thumbnail.length > 0) {
-      coverUrl = imageLinks.thumbnail
-    } else {
-      coverUrl = 'http://via.placeholder.com/128x193?text=No%20Cover'
-    }
-
+    let coverUrl = (imageLinks && imageLinks.thumbnail && imageLinks.thumbnail.length > 0) ? imageLinks.thumbnail : 'http://via.placeholder.com/128x193?text=No%20Cover';
     coverUrl = `url("${coverUrl}")`
 
     return (
