@@ -33,6 +33,8 @@ class SearchBooks extends Component {
             
             if (match) {
               b.shelf = match.shelf
+            } else {
+              b.shelf = 'none'
             }
           })
 
