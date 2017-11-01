@@ -36,12 +36,11 @@ class Book extends Component {
     const { title, imageLinks } = this.props.book
     let { authors } = this.props.book
 
-    if (authors) {
-      authors = authors.join(', ')
-    }
+    authors = authors ? authors.join(', '): ''
 
     let coverUrl = (imageLinks && imageLinks.thumbnail && imageLinks.thumbnail.length > 0) ? imageLinks.thumbnail : 'http://via.placeholder.com/128x193?text=No%20Cover';
     coverUrl = `url("${coverUrl}")`
+
 
     return (
     <li>
